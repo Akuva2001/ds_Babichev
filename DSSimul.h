@@ -230,8 +230,8 @@ private:
         auto start = std::chrono::system_clock::now();
         while (!nl->stopFlag) {
             auto cl = std::chrono::system_clock::now() - start;
-            nl->tick = chrono::duration_cast<chrono::milliseconds>(cl).count() / 1000;
-            this_thread::sleep_for(chrono::milliseconds(100));
+            nl->tick = chrono::duration_cast<chrono::milliseconds>(cl).count() / 100;
+            this_thread::sleep_for(chrono::milliseconds(10));
         }
     }
     recursive_mutex globalTimerMutex;
@@ -302,7 +302,7 @@ void timerSender(NetworkLayer *nl, int time) {
     int current = 0;
     while (!nl->stopFlag) {
         nl->send(-1, -1, Message("*TIME", current++));
-        this_thread::sleep_for(chrono::seconds(time));
+        this_thread::sleep_for(chrono::milliseconds(time));
     }
 }
 
